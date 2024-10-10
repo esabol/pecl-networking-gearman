@@ -20,9 +20,9 @@ jobs:
           - os: ubuntu-latest
             version: '8.3'
             stable: false
-          - os: macos-latest
-            version: '8.3'
-            stable: false
+###          - os: macos-latest
+###            version: '8.3'
+###            stable: false
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -48,7 +48,7 @@ jobs:
 
       - name: Configure Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: ./configure
+        run: ./configure --with-gearman
 
       - name: Make extension
         run: make all
