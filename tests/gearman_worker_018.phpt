@@ -71,6 +71,19 @@ try {
 	print "Exception 6 caught: " . $e->getMessage() . PHP_EOL;
 }
 
+// Test 7: GearmanWorker::addServer, default (positive case)
+$worker7 = new GearmanWorker();
+$worker7->addServer('localhost', 4730);
+
+// Test 8: GearmanWorker::addServer, explicitly set enableExceptionHandler (positive case)
+$worker8 = new GearmanWorker();
+$worker8->addServer('localhost', 4730, true);
+
+// Test 9: GearmanWorker::addServer, call enableExceptionHandler (positive case)
+$worker9 = new GearmanWorker();
+$worker9->addServer('localhost', 4730, false);
+$worker9->enableExceptionHandler();
+
 print "OK";
 ?>
 --EXPECTF--
