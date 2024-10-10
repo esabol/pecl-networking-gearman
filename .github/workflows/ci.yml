@@ -55,7 +55,7 @@ jobs:
         run: make
 
       - name: Run tests
-        run: test
+        run: make test
 ###        run: php -n run-tests.php -n -d extension_dir=modules -d extension=gearman --show-diff tests
 
       - name: Install extension
