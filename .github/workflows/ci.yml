@@ -11,6 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ !matrix.stable }}
     strategy:
+      fail-fast: false
       matrix:
 ###        os: [ubuntu-latest, macos-latest]
         os: [ubuntu-latest]
