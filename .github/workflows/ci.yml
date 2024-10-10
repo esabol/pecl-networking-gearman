@@ -13,8 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-###        os: [ubuntu-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
         version: ['8.0', '8.1', '8.2']
         stable: [true]
         include:
@@ -32,11 +31,11 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: Install gearman
+      - name: Install gearman on macOS
         if: ${{ matrix.os == 'macos-latest' }}
         run: brew install gearman
 
-      - name: Install gearman
+      - name: Install gearman on Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: sudo apt-get install libgearman-dev
 
@@ -45,7 +44,7 @@ jobs:
 
       - name: Configure macOS
         if: ${{ matrix.os == 'macos-latest' }}
-        run: ls -l $(brew --prefix gearman)/. && ./configure --with-gearman=$(brew --prefix gearman)
+        run: ./configure --with-gearman=$(brew --prefix gearman)
 
       - name: Configure Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
