@@ -51,7 +51,7 @@ jobs:
         run: ./configure --with-gearman
 
       - name: Make extension
-        run: make all
+        run: make
 
       - name: Run tests
         run: php -n run-tests.php -n -d extension_dir=modules -d extension=gearman --show-diff tests
