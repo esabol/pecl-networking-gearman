@@ -37,7 +37,7 @@ jobs:
 
       - name: Install gearman
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: apt-get install gearman-job-server
+        run: sudo apt-get install gearman-job-server
 
       - name: Run phpize
         run: phpize
