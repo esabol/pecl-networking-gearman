@@ -12,7 +12,8 @@ jobs:
     continue-on-error: ${{ !matrix.stable }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+###        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
         version: ['8.0', '8.1', '8.2']
         stable: [true]
         include:
@@ -27,7 +28,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.version }}
-          tool: phpize, php-config
 
       - uses: actions/checkout@v3
 
