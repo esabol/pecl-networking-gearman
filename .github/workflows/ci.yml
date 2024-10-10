@@ -46,11 +46,14 @@ jobs:
 
       - name: Configure macOS
         if: ${{ matrix.os == 'macos-latest' }}
-        run: ./configure --with-gearman=$(brew --prefix gearman)
+        run: brew --prefix gearman && ./configure --with-gearman=$(brew --prefix gearman)
 
       - name: Configure Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: ./configure --with-gearman
+
+      - name: Make arginfo.h
+        run: mv gearman_arginfo.h gearman_arginfo.h.save && make gearman_arginfo.h && cat gearman_arginfo.h
 
       - name: Make extension
         run: make
