@@ -44,6 +44,14 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_timeout, 0, 2
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_ssl, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, obj, GearmanClient, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ssl, _IS_BOOL, 0, "true")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ca_file, IS_STRING, 0, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 0, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 0, "null")
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_add_server, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanClient, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, host, IS_STRING, 0, "null")
@@ -280,6 +288,14 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_timeout, 0, 2
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_ssl, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, obj, GearmanWorker, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ssl, _IS_BOOL, 0, "true")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ca_file, IS_STRING, 0, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 0, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 0, "null")
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_id, 0, 2, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanWorker, 0)
 	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
@@ -363,6 +379,13 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanClient_setTimeout, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanClient_setSSL, 0, 0, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ssl, _IS_BOOL, 0, "true")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ca_file, IS_STRING, 0, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 0, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 0, "null")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanClient_addServer, 0, 0, _IS_BOOL, 0)
@@ -563,6 +586,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GearmanWorker_setTimeout arginfo_class_GearmanClient_setTimeout
 
+#define arginfo_class_GearmanWorker_setSSL arginfo_class_GearmanClient_setSSL
+  
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanWorker_setId, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -614,6 +639,7 @@ ZEND_FUNCTION(gearman_client_add_options);
 ZEND_FUNCTION(gearman_client_remove_options);
 ZEND_FUNCTION(gearman_client_timeout);
 ZEND_FUNCTION(gearman_client_set_timeout);
+ZEND_FUNCTION(gearman_client_set_ssl);
 ZEND_FUNCTION(gearman_client_add_server);
 ZEND_FUNCTION(gearman_client_add_servers);
 ZEND_FUNCTION(gearman_client_wait);
@@ -682,6 +708,7 @@ ZEND_FUNCTION(gearman_worker_add_options);
 ZEND_FUNCTION(gearman_worker_remove_options);
 ZEND_FUNCTION(gearman_worker_timeout);
 ZEND_FUNCTION(gearman_worker_set_timeout);
+ZEND_FUNCTION(gearman_worker_set_ssl);
 ZEND_FUNCTION(gearman_worker_set_id);
 ZEND_FUNCTION(gearman_worker_add_server);
 ZEND_FUNCTION(gearman_worker_add_servers);
@@ -717,6 +744,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gearman_client_remove_options, arginfo_gearman_client_remove_options)
 	ZEND_FE(gearman_client_timeout, arginfo_gearman_client_timeout)
 	ZEND_FE(gearman_client_set_timeout, arginfo_gearman_client_set_timeout)
+	ZEND_FE(gearman_client_set_ssl, arginfo_gearman_client_set_ssl)
 	ZEND_FE(gearman_client_add_server, arginfo_gearman_client_add_server)
 	ZEND_FE(gearman_client_add_servers, arginfo_gearman_client_add_servers)
 	ZEND_FE(gearman_client_wait, arginfo_gearman_client_wait)
@@ -785,6 +813,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gearman_worker_remove_options, arginfo_gearman_worker_remove_options)
 	ZEND_FE(gearman_worker_timeout, arginfo_gearman_worker_timeout)
 	ZEND_FE(gearman_worker_set_timeout, arginfo_gearman_worker_set_timeout)
+	ZEND_FE(gearman_worker_set_ssl, arginfo_gearman_worker_set_ssl)
 	ZEND_FE(gearman_worker_set_id, arginfo_gearman_worker_set_id)
 	ZEND_FE(gearman_worker_add_server, arginfo_gearman_worker_add_server)
 	ZEND_FE(gearman_worker_add_servers, arginfo_gearman_worker_add_servers)
@@ -813,6 +842,7 @@ static const zend_function_entry class_GearmanClient_methods[] = {
 	ZEND_ME_MAPPING(removeOptions, gearman_client_remove_options, arginfo_class_GearmanClient_removeOptions, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(timeout, gearman_client_timeout, arginfo_class_GearmanClient_timeout, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(setTimeout, gearman_client_set_timeout, arginfo_class_GearmanClient_setTimeout, ZEND_ACC_PUBLIC)
+	ZEND_ME_MAPPING(setSSL, gearman_client_set_ssl, arginfo_class_GearmanClient_setSSL, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(addServer, gearman_client_add_server, arginfo_class_GearmanClient_addServer, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(addServers, gearman_client_add_servers, arginfo_class_GearmanClient_addServers, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(wait, gearman_client_wait, arginfo_class_GearmanClient_wait, ZEND_ACC_PUBLIC)
@@ -900,6 +930,7 @@ static const zend_function_entry class_GearmanWorker_methods[] = {
 	ZEND_ME_MAPPING(removeOptions, gearman_worker_remove_options, arginfo_class_GearmanWorker_removeOptions, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(timeout, gearman_worker_timeout, arginfo_class_GearmanWorker_timeout, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(setTimeout, gearman_worker_set_timeout, arginfo_class_GearmanWorker_setTimeout, ZEND_ACC_PUBLIC)
+	ZEND_ME_MAPPING(setSSL, gearman_worker_set_ssl, arginfo_class_GearmanWorker_setSSL, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(setId, gearman_worker_set_id, arginfo_class_GearmanWorker_setId, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(addServer, gearman_worker_add_server, arginfo_class_GearmanWorker_addServer, ZEND_ACC_PUBLIC)
 	ZEND_ME_MAPPING(addServers, gearman_worker_add_servers, arginfo_class_GearmanWorker_addServers, ZEND_ACC_PUBLIC)

@@ -267,6 +267,49 @@ PHP_FUNCTION(gearman_client_set_timeout) {
 }
 /* }}} */
 
+/* {{{ proto bool gearman_client_set_ssl(object client [, bool ssl [, string ca_file [, string certificate [, string key_file ]]]])
+   Set SSL mode for a client structure. */
+PHP_FUNCTION(gearman_client_set_ssl) {
+        zend_bool ssl = 1;
+        char *ca_file = NULL;
+        size_t ca_file_len = 0;
+        char *certificate = NULL;
+        size_t certificate_len = 0;
+        char *key_file = NULL;
+        size_t key_file_len = 0;
+
+        gearman_client_obj *obj;
+        zval *zobj;
+
+        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bsss",
+					&zobj,
+					gearman_client_ce,
+					&ssl,
+					&ca_file,
+					&ca_file_len,
+					&certificate,
+					&certificate_len,
+					&key_file,
+					&key_file_len) == FAILURE) {
+                RETURN_FALSE;
+        }
+        obj = Z_GEARMAN_CLIENT_P(zobj);
+
+	if (ca_file == NULL) {
+		cfg_get_string("gearman.ssl_ca_file", &ca_file);
+	}
+	if (certificate == NULL) {
+		cfg_get_string("gearman.ssl_certificate", &certificate);
+	}
+	if (key_file == NULL) {
+		cfg_get_string("gearman.ssl_key_file", &key_file);
+	}
+	
+	gearman_client_set_ssl(&(obj->client), ssl, ca_file, certificate, key_file);
+        RETURN_TRUE;
+}
+/* }}} */
+
 /* {{{ proto bool gearman_client_add_server(object client [, string host [, int
  * port [, bool setupExceptionHandler ]]])
    Add a job server to a client. This goes into a list of servers than can be used to run tasks. No socket I/O happens here, it is just added to a list. */

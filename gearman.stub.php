@@ -40,6 +40,9 @@ class GearmanClient {
     /** @alias gearman_client_set_timeout */
     public function setTimeout(int $timeout): bool {}
 
+    /** @alias gearman_client_set_ssl */
+    public function setSSL(bool $ssl = true, string $ca_file = null, string $certificate = null, string $key_file = null): bool {}
+
     /** @alias gearman_client_add_server */
     public function addServer(string $host = null, int $port = 0, bool $setupExceptionHandler = true): bool {}
 
@@ -153,6 +156,7 @@ function gearman_client_add_options(GearmanClient $obj, int $option): bool {}
 function gearman_client_remove_options(GearmanClient $obj, int $option): bool {}
 function gearman_client_timeout(GearmanClient $obj): ?int {}
 function gearman_client_set_timeout(GearmanClient $obj, int $timeout): bool {}
+function gearman_client_set_ssl(GearmanClient $obj, bool $ssl = true, string $ca_file = null, string $certificate = null, string $key_file = null): bool {}
 function gearman_client_add_server(GearmanClient $obj, string $host = null, int $port = 0, bool $setupExceptionHandler = true): bool {}
 function gearman_client_add_servers(GearmanClient $obj, string $servers = null, bool $setupExceptionHandler = true): bool {}
 function gearman_client_wait(GearmanClient $obj): bool {}
@@ -333,6 +337,9 @@ class GearmanWorker {
     /** @alias gearman_worker_set_id */
     public function setId(string $id): bool {}
 
+    /** @alias gearman_worker_set_ssl */
+    public function setSSL(bool $ssl = true, string $ca_file = null, string $certificate = null, string $key_file = null): bool {}
+
     /** @alias gearman_worker_add_server */
     public function addServer(string $host = null, int $port = 0, bool $setupExceptionHandler = true): bool {}
 
@@ -377,6 +384,7 @@ function gearman_worker_remove_options(GearmanWorker $obj, int $option): true {}
 function gearman_worker_timeout(GearmanWorker $obj): int {}
 function gearman_worker_set_timeout(GearmanWorker $obj, int $timeout): true {}
 function gearman_worker_set_id(GearmanWorker $obj, string $id): bool {}
+function gearman_worker_set_ssl(GearmanClient $obj, bool $ssl = true, string $ca_file = null, string $certificate = null, string $key_file = null): bool {}
 function gearman_worker_add_server(GearmanWorker $obj, string $host = null, int $port = 0, bool $setupExceptionHandler = true): bool {}
 function gearman_worker_add_servers(GearmanWorker $obj, string $servers = null, bool $setupExceptionHandler = true): bool {}
 function gearman_worker_wait(GearmanWorker $obj): bool {}

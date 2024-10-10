@@ -268,6 +268,49 @@ PHP_FUNCTION(gearman_worker_set_id) {
 }
 /* }}} */
 
+/* {{{ proto bool gearman_worker_set_ssl(object worker [, bool ssl [, string ca_file [, string certificate [, string key_file ]]]])
+   Set SSL mode for a worker structure. */
+PHP_FUNCTION(gearman_worker_set_ssl) {
+        zend_bool ssl = 1;
+        char *ca_file = NULL;
+        size_t ca_file_len = 0;
+        char *certificate = NULL;
+        size_t certificate_len = 0;
+        char *key_file = NULL;
+        size_t key_file_len = 0;
+
+        gearman_worker_obj *obj;
+        zval *zobj;
+
+        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bsss",
+					&zobj,
+					gearman_worker_ce,
+					&ssl,
+					&ca_file,
+					&ca_file_len,
+					&certificate,
+					&certificate_len,
+					&key_file,
+					&key_file_len) == FAILURE) {
+                RETURN_FALSE;
+        }
+        obj = Z_GEARMAN_WORKER_P(zobj);
+
+	if (ca_file == NULL) {
+		cfg_get_string("gearman.ssl_ca_file", &ca_file);
+	}
+	if (certificate == NULL) {
+		cfg_get_string("gearman.ssl_certificate", &certificate);
+	}
+	if (key_file == NULL) {
+		cfg_get_string("gearman.ssl_key_file", &key_file);
+	}
+	
+	gearman_worker_set_ssl(&(obj->worker), ssl, ca_file, certificate, key_file);
+        RETURN_TRUE;
+}
+/* }}} */
+
 /* {{{ proto bool gearman_worker_add_server(object worker [, string host [, int port [, bool setupExceptionHandler = true]]])
    Add a job server to a worker. This goes into a list of servers than can be used to run tasks. No socket I/O happens here, it is just added to a list. */
 PHP_FUNCTION(gearman_worker_add_server) {
