@@ -21,9 +21,9 @@ jobs:
           - os: ubuntu-latest
             version: '8.3'
             stable: false
-###          - os: macos-latest
-###            version: '8.3'
-###            stable: false
+          - os: macos-latest
+            version: '8.3'
+            stable: false
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
