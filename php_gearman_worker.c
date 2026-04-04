@@ -524,6 +524,25 @@ static void *_php_worker_function_callback(gearman_job_st *job,
 
         *ret_ptr = jobj->ret;
 
+#if PHP_VERSION_ID >= 80000
+        /* If exit()/die() was called inside the callback, PHP sets an
+         * UnwindExit exception but returns control here. Without this
+         * check, the code below would send WORK_EXCEPTION to gearmand,
+         * marking the job as failed instead of returning it to the queue.
+         * Force a bailout so the process exits without sending any gearman
+         * protocol response — gearmand will detect the disconnect and
+         * return the job to the queue for retry. See issue #26. */
+        if (EG(exception) && zend_is_unwind_exit(EG(exception))) {
+                if (!Z_ISUNDEF(argv[0])) {
+                        zval_ptr_dtor_nogc(&argv[0]);
+                }
+                if (!Z_ISUNDEF(argv[1])) {
+                        zval_ptr_dtor_nogc(&argv[1]);
+                }
+                zend_bailout();
+        }
+#endif
+
         if (EG(exception)) {
                 *ret_ptr = GEARMAN_WORK_EXCEPTION;
 
