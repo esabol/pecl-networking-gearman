@@ -28,10 +28,9 @@ if ($pid1 === -1) {
 }
 if ($pid1 === 0) {
     $w = new GearmanWorker();
-    $w->addServer($host, $port);
-    $w->addFunction($func, function($job) {
-        exit(1);
-    });
+    if ($w->addServer($host, $port) !== true) exit(2);
+    $w->setTimeout(10000);
+    if ($w->addFunction($func, function($job) { exit(1); }) !== true) exit(2);
     $w->work();
     exit(0);
 }
@@ -50,12 +49,12 @@ if ($pid2 === -1) {
 }
 if ($pid2 === 0) {
     $w = new GearmanWorker();
-    $w->addServer($host, $port);
+    if ($w->addServer($host, $port) !== true) exit(3);
     $w->setTimeout(10000);
-    $w->addFunction($func, function($job) {
+    if ($w->addFunction($func, function($job) {
         echo "payload: " . $job->workload() . PHP_EOL;
         return "done";
-    });
+    }) !== true) exit(3);
     $ret = $w->work();
     exit($ret ? 0 : 2);
 }
