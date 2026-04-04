@@ -33,6 +33,7 @@ awk 'BEGIN { p= 1; } \
      { if (p == 1) { print $0; } }' php_gearman.c >> php_gearman.c.new
 
 grep ' GEARMAN' $header | \
+  grep -v 'STOP_WAIT_ON_SIGNAL' | \
   sed 's/.*\(GEARMAN[A-Z0-9_]*\).*/\1/' | \
   sed 's/\(.*\)/	REGISTER_LONG_CONSTANT("\1",\
 		\1,\
