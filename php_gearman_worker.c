@@ -554,14 +554,25 @@ static void *_php_worker_function_callback(gearman_job_st *job,
 #endif
 
         if (EG(exception)) {
+                zend_string *exc_msg;
+                zval rv;
+
                 *ret_ptr = GEARMAN_WORK_EXCEPTION;
 
-                jobj->ret = gearman_job_send_exception(jobj->job, "Unable to add worker function", sizeof("Unable to add worker function") - 1);
+                /* Send the actual exception message to gearmand rather than
+                 * the misleading "Unable to add worker function" string that
+                 * was hardcoded here previously. See issue #21. */
+                exc_msg = zval_get_string(zend_read_property(
+                        zend_ce_exception, EG(exception), "message", sizeof("message") - 1, 1, &rv));
+
+                jobj->ret = gearman_job_send_exception(jobj->job, ZSTR_VAL(exc_msg), ZSTR_LEN(exc_msg));
 
                 if (jobj->ret != GEARMAN_SUCCESS && jobj->ret != GEARMAN_IO_WAIT) {
-                        php_error_docref(NULL, E_WARNING,  "Unable to add worker function: %s",
-                                        gearman_job_error(jobj->job));
+                        php_error_docref(NULL, E_WARNING,
+                                        "Worker callback exception: %s", ZSTR_VAL(exc_msg));
                 }
+
+                zend_string_release(exc_msg);
         }
 
         if (Z_ISUNDEF(retval)) {
