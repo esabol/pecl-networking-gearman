@@ -16,11 +16,11 @@
   <email>hradtke@php.net</email>
   <active>yes</active>
  </lead>
- <date>2026-01-14</date>
- <time>13:30:00</time>
+ <date>2026-04-04</date>
+ <time>20:00:00</time>
  <version>
-  <release>2.1.5</release>
-  <api>2.1.5</api>
+  <release>2.2.0</release>
+  <api>2.2.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -28,7 +28,16 @@
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
  <notes>
-PHP 8 is now supported
+- Add SSL support via setSSL() for GearmanClient and GearmanWorker (#9)
+- Fix jobs not retried when worker calls exit() mid-callback (#26)
+- Fix forked children causing premature job completion (#40)
+- Fix misleading "Unable to add worker function" exception message (#21)
+- Fix worker constructor error path cleanup (#17)
+- Add Homebrew Apple Silicon search path to config.m4 (#32)
+- Drop PHP 7.1, minimum is now PHP 7.2 (#42)
+- Support PHP 8.6 (#49)
+- Expose GEARMAN_*_STOP_WAIT_ON_SIGNAL constants (#51)
+- Add PIE support via composer.json
  </notes>
  <contents>
   <dir name="/">
@@ -47,6 +56,7 @@ PHP 8 is now supported
    <file name="TODO" role="doc" />
    <file name="test_client.php" role="doc" />
    <file name="test_worker.php" role="doc" />
+   <file name="composer.json" role="src" />
    <file name="config.m4" role="src" />
    <file name="php_gearman.c" role="src" />
    <file name="php_gearman.h" role="src" />
@@ -89,6 +99,8 @@ PHP 8 is now supported
    <file name="tests/gearman_client_020.phpt" role="test" />
    <file name="tests/gearman_client_021.phpt" role="test" />
    <file name="tests/gearman_client_022.phpt" role="test" />
+   <file name="tests/gearman_client_023.phpt" role="test" />
+   <file name="tests/gearman_client_024.phpt" role="test" />
    <file name="tests/gearman_client_integration_test_001.phpt" role="test" />
    <file name="tests/gearman_client_integration_test_002.phpt" role="test" />
    <file name="tests/gearman_job_001.phpt" role="test" />
@@ -129,7 +141,13 @@ PHP 8 is now supported
    <file name="tests/gearman_worker_015.phpt" role="test" />
    <file name="tests/gearman_worker_016.phpt" role="test" />
    <file name="tests/gearman_worker_017.phpt" role="test" />
+   <file name="tests/gearman_worker_018.phpt" role="test" />
+   <file name="tests/gearman_worker_019.phpt" role="test" />
+   <file name="tests/gearman_worker_020.phpt" role="test" />
    <file name="tests/gearman_worker_integration_test_001.phpt" role="test" />
+   <file name="tests/gearman_worker_integration_test_002.phpt" role="test" />
+   <file name="tests/gearman_worker_integration_test_003.phpt" role="test" />
+   <file name="tests/gearman_worker_integration_test_004.phpt" role="test" />
    <file name="tests/skipifconnect.inc" role="test" />
    <file name="tests/skipif.inc" role="test" />
    <file name="tests/skipifversion.inc" role="test" />
@@ -150,6 +168,30 @@ PHP 8 is now supported
  <providesextension>gearman</providesextension>
  <extsrcrelease />
  <changelog>
+
+  <release>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <version>
+    <release>2.2.0</release>
+    <api>2.2.0</api>
+   </version>
+   <date>2026-04-04</date>
+   <notes>
+- Add SSL support via setSSL() for GearmanClient and GearmanWorker (#9)
+- Fix jobs not retried when worker calls exit() mid-callback (#26)
+- Fix forked children causing premature job completion (#40)
+- Fix misleading "Unable to add worker function" exception message (#21)
+- Fix worker constructor error path cleanup (#17)
+- Add Homebrew Apple Silicon search path to config.m4 (#32)
+- Drop PHP 7.1, minimum is now PHP 7.2 (#42)
+- Support PHP 8.6 (#49)
+- Expose GEARMAN_*_STOP_WAIT_ON_SIGNAL constants (#51)
+- Add PIE support via composer.json
+   </notes>
+  </release>
 
   <release>
    <stability>
