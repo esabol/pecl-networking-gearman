@@ -30,6 +30,7 @@ static void gearman_client_ctor(INTERNAL_FUNCTION_PARAMETERS) {
         }
 
         client->flags |= GEARMAN_CLIENT_OBJ_CREATED;
+        client->created_pid = getpid();
         gearman_client_add_options(&(client->client), GEARMAN_CLIENT_FREE_TASKS);
         gearman_client_set_workload_malloc_fn(&(client->client), _php_malloc, NULL);
         gearman_client_set_workload_free_fn(&(client->client), _php_free, NULL);
@@ -82,12 +83,13 @@ PHP_METHOD(GearmanClient, __destruct)
         }
 
         if (intern->flags & GEARMAN_CLIENT_OBJ_CREATED) {
-                context = gearman_client_context(&(intern->client));
-                if (context) {
-                        efree(context);
+                if (getpid() == intern->created_pid) {
+                        context = gearman_client_context(&(intern->client));
+                        if (context) {
+                                efree(context);
+                        }
+                        gearman_client_free(&intern->client);
                 }
-
-                gearman_client_free(&intern->client);
                 intern->flags &= ~GEARMAN_CLIENT_OBJ_CREATED;
         }
 }

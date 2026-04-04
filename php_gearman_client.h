@@ -51,6 +51,7 @@ typedef struct {
 
 	zend_ulong created_tasks;
 	zval task_list;
+	pid_t created_pid;
 
 	zend_object std;
 } gearman_client_obj;

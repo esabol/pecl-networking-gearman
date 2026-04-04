@@ -48,6 +48,7 @@ typedef struct {
         gearman_worker_obj_flags_t flags;
         gearman_worker_st worker;
         zval cb_list;
+        pid_t created_pid;
 
         zend_object std;
 } gearman_worker_obj;

@@ -31,6 +31,7 @@ static void gearman_worker_ctor(INTERNAL_FUNCTION_PARAMETERS) {
 	}
 
 	worker->flags |= GEARMAN_WORKER_OBJ_CREATED;
+	worker->created_pid = getpid();
 	gearman_worker_set_workload_malloc_fn(&(worker->worker), _php_malloc, NULL);
 	gearman_worker_set_workload_free_fn(&(worker->worker), _php_free, NULL);
 }
@@ -61,7 +62,13 @@ void gearman_worker_free_obj(zend_object *object) {
         gearman_worker_obj *intern = gearman_worker_fetch_object(object);
 
         if (intern->flags & GEARMAN_WORKER_OBJ_CREATED) {
-                gearman_worker_free(&(intern->worker));
+                /* Skip gearman_worker_free() in forked children to avoid
+                 * sending protocol messages over the parent's connection,
+                 * which would cause gearmand to prematurely mark the
+                 * parent's in-progress job as complete. See #40. */
+                if (getpid() == intern->created_pid) {
+                        gearman_worker_free(&(intern->worker));
+                }
                 intern->flags &= ~GEARMAN_WORKER_OBJ_CREATED;
         }
 
@@ -80,7 +87,9 @@ PHP_METHOD(GearmanWorker, __destruct) {
 	}
 
 	if (intern->flags & GEARMAN_WORKER_OBJ_CREATED) {
-		gearman_worker_free(&(intern->worker));
+		if (getpid() == intern->created_pid) {
+			gearman_worker_free(&(intern->worker));
+		}
 		intern->flags &= ~GEARMAN_WORKER_OBJ_CREATED;
 	}
 }
