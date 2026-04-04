@@ -16,6 +16,7 @@
 #include "php_ini.h"
 #include "ext/standard/info.h"
 
+
 #include "zend_exceptions.h"
 #include "zend_interfaces.h"
 
@@ -51,6 +52,7 @@ typedef struct {
 
 	zend_ulong created_tasks;
 	zval task_list;
+	zend_long created_pid;
 
 	zend_object std;
 } gearman_client_obj;
