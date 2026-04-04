@@ -138,8 +138,8 @@ PHP 8 is now supported
  <dependencies>
   <required>
    <php>
-    <min>7.1.0</min>
-    <max>8.5.99</max>
+    <min>7.2.0</min>
+    <max>8.6.99</max>
     <exclude>6.0.0</exclude>
    </php>
    <pearinstaller>
