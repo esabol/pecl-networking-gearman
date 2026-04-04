@@ -306,7 +306,7 @@ PHP_FUNCTION(gearman_worker_set_ssl) {
         gearman_worker_obj *obj;
         zval *zobj;
 
-        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bsss",
+        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bs!s!s!",
                                         &zobj, gearman_worker_ce,
                                         &ssl,
                                         &ca_file, &ca_file_len,
@@ -316,36 +316,29 @@ PHP_FUNCTION(gearman_worker_set_ssl) {
         }
         obj = Z_GEARMAN_WORKER_P(zobj);
 
-        if (ca_file == NULL) {
-                cfg_get_string("gearman.ssl_ca_file", &ca_file);
-        }
-        if (certificate == NULL) {
-                cfg_get_string("gearman.ssl_certificate", &certificate);
-        }
-        if (key_file == NULL) {
-                cfg_get_string("gearman.ssl_key_file", &key_file);
-        }
-
 #ifdef HAVE_GEARMAN_WORKER_SET_SSL
         gearman_worker_set_ssl(&(obj->worker), ssl, ca_file, certificate, key_file);
 #else
         /* gearman_worker_set_ssl() is declared in libgearman headers but not
-         * implemented (missing symbol). Use addOptions as fallback for the SSL
-         * flag, and set env vars for cert paths since that's how libgearman's
-         * internal SSL init reads them. */
+         * implemented (missing symbol through 1.1.22). Use addOptions as
+         * fallback for the SSL flag, and set env vars for cert paths since
+         * that's how libgearman's internal SSL init reads them. */
         if (ssl) {
                 gearman_worker_add_options(&(obj->worker), GEARMAN_WORKER_SSL);
+                if (ca_file) {
+                        setenv("GEARMAND_CA_CERTIFICATE", ca_file, 1);
+                }
+                if (certificate) {
+                        setenv("GEARMAN_CLIENT_SSL_CERTIFICATE", certificate, 1);
+                }
+                if (key_file) {
+                        setenv("GEARMAN_CLIENT_SSL_KEY", key_file, 1);
+                }
         } else {
                 gearman_worker_remove_options(&(obj->worker), GEARMAN_WORKER_SSL);
-        }
-        if (ca_file) {
-                setenv("GEARMAND_CA_CERTIFICATE", ca_file, 1);
-        }
-        if (certificate) {
-                setenv("GEARMAN_CLIENT_SSL_CERTIFICATE", certificate, 1);
-        }
-        if (key_file) {
-                setenv("GEARMAN_CLIENT_SSL_KEY", key_file, 1);
+                unsetenv("GEARMAND_CA_CERTIFICATE");
+                unsetenv("GEARMAN_CLIENT_SSL_CERTIFICATE");
+                unsetenv("GEARMAN_CLIENT_SSL_KEY");
         }
 #endif
         RETURN_TRUE;

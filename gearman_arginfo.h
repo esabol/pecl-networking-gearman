@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 61b9d7c4865da96ac967a58f08937db3999e6548 */
+ * Stub hash: 57f20badf8cad606b28f563f899f562578894e4a */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_version, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -46,7 +46,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_timeout, 0, 2
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-#ifdef HAVE_GEARMAN_CLIENT_SET_SSL
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_ssl, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanClient, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ssl, _IS_BOOL, 0, "true")
@@ -54,7 +53,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_ssl, 0, 1, _I
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 1, "null")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 1, "null")
 ZEND_END_ARG_INFO()
-#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_add_server, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanClient, 0)
@@ -290,17 +288,17 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_timeout, 0, 2
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_id, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, obj, GearmanWorker, 0)
+	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_ssl, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanWorker, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ssl, _IS_BOOL, 0, "true")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ca_file, IS_STRING, 1, "null")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 1, "null")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 1, "null")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_set_id, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_OBJ_INFO(0, obj, GearmanWorker, 0)
-	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_worker_add_server, 0, 1, _IS_BOOL, 0)
@@ -389,8 +387,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanClient_setSSL, 0, 0
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 1, "null")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 1, "null")
 ZEND_END_ARG_INFO()
-
-#define arginfo_class_GearmanWorker_setSSL arginfo_class_GearmanClient_setSSL
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanClient_addServer, 0, 0, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, host, IS_STRING, 1, "null")
@@ -593,6 +589,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GearmanWorker_setId, 0, 1,
 	ZEND_ARG_TYPE_INFO(0, id, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
+#define arginfo_class_GearmanWorker_setSSL arginfo_class_GearmanClient_setSSL
+
 #define arginfo_class_GearmanWorker_addServer arginfo_class_GearmanClient_addServer
 
 #define arginfo_class_GearmanWorker_addServers arginfo_class_GearmanClient_addServers
@@ -625,7 +623,6 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GearmanWorker_enableExceptionHandler arginfo_class_GearmanClient_wait
 
-
 ZEND_FUNCTION(gearman_version);
 ZEND_FUNCTION(gearman_bugreport);
 ZEND_FUNCTION(gearman_verbose_name);
@@ -640,9 +637,7 @@ ZEND_FUNCTION(gearman_client_add_options);
 ZEND_FUNCTION(gearman_client_remove_options);
 ZEND_FUNCTION(gearman_client_timeout);
 ZEND_FUNCTION(gearman_client_set_timeout);
-#ifdef HAVE_GEARMAN_CLIENT_SET_SSL
 ZEND_FUNCTION(gearman_client_set_ssl);
-#endif
 ZEND_FUNCTION(gearman_client_add_server);
 ZEND_FUNCTION(gearman_client_add_servers);
 ZEND_FUNCTION(gearman_client_wait);
@@ -711,8 +706,8 @@ ZEND_FUNCTION(gearman_worker_add_options);
 ZEND_FUNCTION(gearman_worker_remove_options);
 ZEND_FUNCTION(gearman_worker_timeout);
 ZEND_FUNCTION(gearman_worker_set_timeout);
-ZEND_FUNCTION(gearman_worker_set_ssl);
 ZEND_FUNCTION(gearman_worker_set_id);
+ZEND_FUNCTION(gearman_worker_set_ssl);
 ZEND_FUNCTION(gearman_worker_add_server);
 ZEND_FUNCTION(gearman_worker_add_servers);
 ZEND_FUNCTION(gearman_worker_wait);
@@ -731,7 +726,6 @@ ZEND_METHOD(GearmanTask, __construct);
 ZEND_METHOD(GearmanWorker, __construct);
 ZEND_METHOD(GearmanWorker, __destruct);
 
-
 static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gearman_version, arginfo_gearman_version)
 	ZEND_FE(gearman_bugreport, arginfo_gearman_bugreport)
@@ -747,9 +741,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gearman_client_remove_options, arginfo_gearman_client_remove_options)
 	ZEND_FE(gearman_client_timeout, arginfo_gearman_client_timeout)
 	ZEND_FE(gearman_client_set_timeout, arginfo_gearman_client_set_timeout)
-#ifdef HAVE_GEARMAN_CLIENT_SET_SSL
 	ZEND_FE(gearman_client_set_ssl, arginfo_gearman_client_set_ssl)
-#endif
 	ZEND_FE(gearman_client_add_server, arginfo_gearman_client_add_server)
 	ZEND_FE(gearman_client_add_servers, arginfo_gearman_client_add_servers)
 	ZEND_FE(gearman_client_wait, arginfo_gearman_client_wait)
@@ -818,8 +810,8 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gearman_worker_remove_options, arginfo_gearman_worker_remove_options)
 	ZEND_FE(gearman_worker_timeout, arginfo_gearman_worker_timeout)
 	ZEND_FE(gearman_worker_set_timeout, arginfo_gearman_worker_set_timeout)
-	ZEND_FE(gearman_worker_set_ssl, arginfo_gearman_worker_set_ssl)
 	ZEND_FE(gearman_worker_set_id, arginfo_gearman_worker_set_id)
+	ZEND_FE(gearman_worker_set_ssl, arginfo_gearman_worker_set_ssl)
 	ZEND_FE(gearman_worker_add_server, arginfo_gearman_worker_add_server)
 	ZEND_FE(gearman_worker_add_servers, arginfo_gearman_worker_add_servers)
 	ZEND_FE(gearman_worker_wait, arginfo_gearman_worker_wait)
@@ -834,126 +826,115 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE_END
 };
 
-
 static const zend_function_entry class_GearmanClient_methods[] = {
 	ZEND_ME(GearmanClient, __construct, arginfo_class_GearmanClient___construct, ZEND_ACC_PUBLIC)
 	ZEND_ME(GearmanClient, __destruct, arginfo_class_GearmanClient___destruct, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(returnCode, gearman_client_return_code, arginfo_class_GearmanClient_returnCode, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(error, gearman_client_error, arginfo_class_GearmanClient_error, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(getErrno, gearman_client_get_errno, arginfo_class_GearmanClient_getErrno, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(options, gearman_client_options, arginfo_class_GearmanClient_options, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setOptions, gearman_client_set_options, arginfo_class_GearmanClient_setOptions, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addOptions, gearman_client_add_options, arginfo_class_GearmanClient_addOptions, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(removeOptions, gearman_client_remove_options, arginfo_class_GearmanClient_removeOptions, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(timeout, gearman_client_timeout, arginfo_class_GearmanClient_timeout, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setTimeout, gearman_client_set_timeout, arginfo_class_GearmanClient_setTimeout, ZEND_ACC_PUBLIC)
-#ifdef HAVE_GEARMAN_CLIENT_SET_SSL
-	ZEND_ME_MAPPING(setSSL, gearman_client_set_ssl, arginfo_class_GearmanClient_setSSL, ZEND_ACC_PUBLIC)
-#endif
-	ZEND_ME_MAPPING(addServer, gearman_client_add_server, arginfo_class_GearmanClient_addServer, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addServers, gearman_client_add_servers, arginfo_class_GearmanClient_addServers, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(wait, gearman_client_wait, arginfo_class_GearmanClient_wait, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doNormal, gearman_client_do_normal, arginfo_class_GearmanClient_doNormal, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doHigh, gearman_client_do_high, arginfo_class_GearmanClient_doHigh, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doLow, gearman_client_do_low, arginfo_class_GearmanClient_doLow, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doBackground, gearman_client_do_background, arginfo_class_GearmanClient_doBackground, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doHighBackground, gearman_client_do_high_background, arginfo_class_GearmanClient_doHighBackground, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doLowBackground, gearman_client_do_low_background, arginfo_class_GearmanClient_doLowBackground, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doJobHandle, gearman_client_do_job_handle, arginfo_class_GearmanClient_doJobHandle, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(doStatus, gearman_client_do_status, arginfo_class_GearmanClient_doStatus, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(jobStatus, gearman_client_job_status, arginfo_class_GearmanClient_jobStatus, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(jobStatusByUniqueKey, gearman_client_job_status_by_unique_key, arginfo_class_GearmanClient_jobStatusByUniqueKey, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(ping, gearman_client_ping, arginfo_class_GearmanClient_ping, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTask, gearman_client_add_task, arginfo_class_GearmanClient_addTask, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTaskHigh, gearman_client_add_task_high, arginfo_class_GearmanClient_addTaskHigh, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTaskLow, gearman_client_add_task_low, arginfo_class_GearmanClient_addTaskLow, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTaskBackground, gearman_client_add_task_background, arginfo_class_GearmanClient_addTaskBackground, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTaskHighBackground, gearman_client_add_task_high_background, arginfo_class_GearmanClient_addTaskHighBackground, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTaskLowBackground, gearman_client_add_task_low_background, arginfo_class_GearmanClient_addTaskLowBackground, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(runTasks, gearman_client_run_tasks, arginfo_class_GearmanClient_runTasks, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addTaskStatus, gearman_client_add_task_status, arginfo_class_GearmanClient_addTaskStatus, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setWorkloadCallback, gearman_client_set_workload_callback, arginfo_class_GearmanClient_setWorkloadCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setCreatedCallback, gearman_client_set_created_callback, arginfo_class_GearmanClient_setCreatedCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setDataCallback, gearman_client_set_data_callback, arginfo_class_GearmanClient_setDataCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setWarningCallback, gearman_client_set_warning_callback, arginfo_class_GearmanClient_setWarningCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setStatusCallback, gearman_client_set_status_callback, arginfo_class_GearmanClient_setStatusCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setCompleteCallback, gearman_client_set_complete_callback, arginfo_class_GearmanClient_setCompleteCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setExceptionCallback, gearman_client_set_exception_callback, arginfo_class_GearmanClient_setExceptionCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setFailCallback, gearman_client_set_fail_callback, arginfo_class_GearmanClient_setFailCallback, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(clearCallbacks, gearman_client_clear_callbacks, arginfo_class_GearmanClient_clearCallbacks, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(context, gearman_client_context, arginfo_class_GearmanClient_context, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setContext, gearman_client_set_context, arginfo_class_GearmanClient_setContext, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(enableExceptionHandler, gearman_client_enable_exception_handler, arginfo_class_GearmanClient_enableExceptionHandler, ZEND_ACC_PUBLIC)
+	ZEND_RAW_FENTRY("returnCode", zif_gearman_client_return_code, arginfo_class_GearmanClient_returnCode, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("error", zif_gearman_client_error, arginfo_class_GearmanClient_error, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("getErrno", zif_gearman_client_get_errno, arginfo_class_GearmanClient_getErrno, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("options", zif_gearman_client_options, arginfo_class_GearmanClient_options, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setOptions", zif_gearman_client_set_options, arginfo_class_GearmanClient_setOptions, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addOptions", zif_gearman_client_add_options, arginfo_class_GearmanClient_addOptions, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("removeOptions", zif_gearman_client_remove_options, arginfo_class_GearmanClient_removeOptions, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("timeout", zif_gearman_client_timeout, arginfo_class_GearmanClient_timeout, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setTimeout", zif_gearman_client_set_timeout, arginfo_class_GearmanClient_setTimeout, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setSSL", zif_gearman_client_set_ssl, arginfo_class_GearmanClient_setSSL, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addServer", zif_gearman_client_add_server, arginfo_class_GearmanClient_addServer, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addServers", zif_gearman_client_add_servers, arginfo_class_GearmanClient_addServers, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("wait", zif_gearman_client_wait, arginfo_class_GearmanClient_wait, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doNormal", zif_gearman_client_do_normal, arginfo_class_GearmanClient_doNormal, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doHigh", zif_gearman_client_do_high, arginfo_class_GearmanClient_doHigh, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doLow", zif_gearman_client_do_low, arginfo_class_GearmanClient_doLow, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doBackground", zif_gearman_client_do_background, arginfo_class_GearmanClient_doBackground, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doHighBackground", zif_gearman_client_do_high_background, arginfo_class_GearmanClient_doHighBackground, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doLowBackground", zif_gearman_client_do_low_background, arginfo_class_GearmanClient_doLowBackground, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doJobHandle", zif_gearman_client_do_job_handle, arginfo_class_GearmanClient_doJobHandle, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("doStatus", zif_gearman_client_do_status, arginfo_class_GearmanClient_doStatus, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("jobStatus", zif_gearman_client_job_status, arginfo_class_GearmanClient_jobStatus, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("jobStatusByUniqueKey", zif_gearman_client_job_status_by_unique_key, arginfo_class_GearmanClient_jobStatusByUniqueKey, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("ping", zif_gearman_client_ping, arginfo_class_GearmanClient_ping, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTask", zif_gearman_client_add_task, arginfo_class_GearmanClient_addTask, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTaskHigh", zif_gearman_client_add_task_high, arginfo_class_GearmanClient_addTaskHigh, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTaskLow", zif_gearman_client_add_task_low, arginfo_class_GearmanClient_addTaskLow, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTaskBackground", zif_gearman_client_add_task_background, arginfo_class_GearmanClient_addTaskBackground, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTaskHighBackground", zif_gearman_client_add_task_high_background, arginfo_class_GearmanClient_addTaskHighBackground, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTaskLowBackground", zif_gearman_client_add_task_low_background, arginfo_class_GearmanClient_addTaskLowBackground, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("runTasks", zif_gearman_client_run_tasks, arginfo_class_GearmanClient_runTasks, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addTaskStatus", zif_gearman_client_add_task_status, arginfo_class_GearmanClient_addTaskStatus, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setWorkloadCallback", zif_gearman_client_set_workload_callback, arginfo_class_GearmanClient_setWorkloadCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setCreatedCallback", zif_gearman_client_set_created_callback, arginfo_class_GearmanClient_setCreatedCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setDataCallback", zif_gearman_client_set_data_callback, arginfo_class_GearmanClient_setDataCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setWarningCallback", zif_gearman_client_set_warning_callback, arginfo_class_GearmanClient_setWarningCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setStatusCallback", zif_gearman_client_set_status_callback, arginfo_class_GearmanClient_setStatusCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setCompleteCallback", zif_gearman_client_set_complete_callback, arginfo_class_GearmanClient_setCompleteCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setExceptionCallback", zif_gearman_client_set_exception_callback, arginfo_class_GearmanClient_setExceptionCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setFailCallback", zif_gearman_client_set_fail_callback, arginfo_class_GearmanClient_setFailCallback, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("clearCallbacks", zif_gearman_client_clear_callbacks, arginfo_class_GearmanClient_clearCallbacks, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("context", zif_gearman_client_context, arginfo_class_GearmanClient_context, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setContext", zif_gearman_client_set_context, arginfo_class_GearmanClient_setContext, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("enableExceptionHandler", zif_gearman_client_enable_exception_handler, arginfo_class_GearmanClient_enableExceptionHandler, ZEND_ACC_PUBLIC, NULL, NULL)
 	ZEND_FE_END
 };
-
 
 static const zend_function_entry class_GearmanJob_methods[] = {
 	ZEND_ME(GearmanJob, __destruct, arginfo_class_GearmanJob___destruct, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(returnCode, gearman_job_return_code, arginfo_class_GearmanJob_returnCode, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setReturn, gearman_job_set_return, arginfo_class_GearmanJob_setReturn, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendData, gearman_job_send_data, arginfo_class_GearmanJob_sendData, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendWarning, gearman_job_send_warning, arginfo_class_GearmanJob_sendWarning, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendStatus, gearman_job_send_status, arginfo_class_GearmanJob_sendStatus, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendComplete, gearman_job_send_complete, arginfo_class_GearmanJob_sendComplete, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendException, gearman_job_send_exception, arginfo_class_GearmanJob_sendException, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendFail, gearman_job_send_fail, arginfo_class_GearmanJob_sendFail, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(handle, gearman_job_handle, arginfo_class_GearmanJob_handle, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(functionName, gearman_job_function_name, arginfo_class_GearmanJob_functionName, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(unique, gearman_job_unique, arginfo_class_GearmanJob_unique, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(workload, gearman_job_workload, arginfo_class_GearmanJob_workload, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(workloadSize, gearman_job_workload_size, arginfo_class_GearmanJob_workloadSize, ZEND_ACC_PUBLIC)
+	ZEND_RAW_FENTRY("returnCode", zif_gearman_job_return_code, arginfo_class_GearmanJob_returnCode, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setReturn", zif_gearman_job_set_return, arginfo_class_GearmanJob_setReturn, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendData", zif_gearman_job_send_data, arginfo_class_GearmanJob_sendData, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendWarning", zif_gearman_job_send_warning, arginfo_class_GearmanJob_sendWarning, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendStatus", zif_gearman_job_send_status, arginfo_class_GearmanJob_sendStatus, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendComplete", zif_gearman_job_send_complete, arginfo_class_GearmanJob_sendComplete, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendException", zif_gearman_job_send_exception, arginfo_class_GearmanJob_sendException, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendFail", zif_gearman_job_send_fail, arginfo_class_GearmanJob_sendFail, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("handle", zif_gearman_job_handle, arginfo_class_GearmanJob_handle, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("functionName", zif_gearman_job_function_name, arginfo_class_GearmanJob_functionName, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("unique", zif_gearman_job_unique, arginfo_class_GearmanJob_unique, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("workload", zif_gearman_job_workload, arginfo_class_GearmanJob_workload, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("workloadSize", zif_gearman_job_workload_size, arginfo_class_GearmanJob_workloadSize, ZEND_ACC_PUBLIC, NULL, NULL)
 	ZEND_FE_END
 };
-
 
 static const zend_function_entry class_GearmanTask_methods[] = {
 	ZEND_ME(GearmanTask, __construct, arginfo_class_GearmanTask___construct, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(returnCode, gearman_task_return_code, arginfo_class_GearmanTask_returnCode, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(functionName, gearman_task_function_name, arginfo_class_GearmanTask_functionName, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(unique, gearman_task_unique, arginfo_class_GearmanTask_unique, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(jobHandle, gearman_task_job_handle, arginfo_class_GearmanTask_jobHandle, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(isKnown, gearman_task_is_known, arginfo_class_GearmanTask_isKnown, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(isRunning, gearman_task_is_running, arginfo_class_GearmanTask_isRunning, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(taskNumerator, gearman_task_numerator, arginfo_class_GearmanTask_taskNumerator, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(taskDenominator, gearman_task_denominator, arginfo_class_GearmanTask_taskDenominator, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(data, gearman_task_data, arginfo_class_GearmanTask_data, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(dataSize, gearman_task_data_size, arginfo_class_GearmanTask_dataSize, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(sendWorkload, gearman_task_send_workload, arginfo_class_GearmanTask_sendWorkload, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(recvData, gearman_task_recv_data, arginfo_class_GearmanTask_recvData, ZEND_ACC_PUBLIC)
+	ZEND_RAW_FENTRY("returnCode", zif_gearman_task_return_code, arginfo_class_GearmanTask_returnCode, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("functionName", zif_gearman_task_function_name, arginfo_class_GearmanTask_functionName, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("unique", zif_gearman_task_unique, arginfo_class_GearmanTask_unique, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("jobHandle", zif_gearman_task_job_handle, arginfo_class_GearmanTask_jobHandle, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("isKnown", zif_gearman_task_is_known, arginfo_class_GearmanTask_isKnown, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("isRunning", zif_gearman_task_is_running, arginfo_class_GearmanTask_isRunning, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("taskNumerator", zif_gearman_task_numerator, arginfo_class_GearmanTask_taskNumerator, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("taskDenominator", zif_gearman_task_denominator, arginfo_class_GearmanTask_taskDenominator, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("data", zif_gearman_task_data, arginfo_class_GearmanTask_data, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("dataSize", zif_gearman_task_data_size, arginfo_class_GearmanTask_dataSize, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("sendWorkload", zif_gearman_task_send_workload, arginfo_class_GearmanTask_sendWorkload, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("recvData", zif_gearman_task_recv_data, arginfo_class_GearmanTask_recvData, ZEND_ACC_PUBLIC, NULL, NULL)
 	ZEND_FE_END
 };
-
 
 static const zend_function_entry class_GearmanWorker_methods[] = {
 	ZEND_ME(GearmanWorker, __construct, arginfo_class_GearmanWorker___construct, ZEND_ACC_PUBLIC)
 	ZEND_ME(GearmanWorker, __destruct, arginfo_class_GearmanWorker___destruct, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(returnCode, gearman_worker_return_code, arginfo_class_GearmanWorker_returnCode, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(error, gearman_worker_error, arginfo_class_GearmanWorker_error, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(getErrno, gearman_worker_errno, arginfo_class_GearmanWorker_getErrno, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(options, gearman_worker_options, arginfo_class_GearmanWorker_options, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setOptions, gearman_worker_set_options, arginfo_class_GearmanWorker_setOptions, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addOptions, gearman_worker_add_options, arginfo_class_GearmanWorker_addOptions, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(removeOptions, gearman_worker_remove_options, arginfo_class_GearmanWorker_removeOptions, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(timeout, gearman_worker_timeout, arginfo_class_GearmanWorker_timeout, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setTimeout, gearman_worker_set_timeout, arginfo_class_GearmanWorker_setTimeout, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setSSL, gearman_worker_set_ssl, arginfo_class_GearmanWorker_setSSL, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(setId, gearman_worker_set_id, arginfo_class_GearmanWorker_setId, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addServer, gearman_worker_add_server, arginfo_class_GearmanWorker_addServer, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addServers, gearman_worker_add_servers, arginfo_class_GearmanWorker_addServers, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(wait, gearman_worker_wait, arginfo_class_GearmanWorker_wait, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(register, gearman_worker_register, arginfo_class_GearmanWorker_register, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(unregister, gearman_worker_unregister, arginfo_class_GearmanWorker_unregister, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(unregisterAll, gearman_worker_unregister_all, arginfo_class_GearmanWorker_unregisterAll, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(grabJob, gearman_worker_grab_job, arginfo_class_GearmanWorker_grabJob, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(addFunction, gearman_worker_add_function, arginfo_class_GearmanWorker_addFunction, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(work, gearman_worker_work, arginfo_class_GearmanWorker_work, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(ping, gearman_worker_ping, arginfo_class_GearmanWorker_ping, ZEND_ACC_PUBLIC)
-	ZEND_ME_MAPPING(enableExceptionHandler, gearman_worker_enable_exception_handler, arginfo_class_GearmanWorker_enableExceptionHandler, ZEND_ACC_PUBLIC)
-	ZEND_FE_END
-};
-
-
-static const zend_function_entry class_GearmanException_methods[] = {
+	ZEND_RAW_FENTRY("returnCode", zif_gearman_worker_return_code, arginfo_class_GearmanWorker_returnCode, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("error", zif_gearman_worker_error, arginfo_class_GearmanWorker_error, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("getErrno", zif_gearman_worker_errno, arginfo_class_GearmanWorker_getErrno, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("options", zif_gearman_worker_options, arginfo_class_GearmanWorker_options, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setOptions", zif_gearman_worker_set_options, arginfo_class_GearmanWorker_setOptions, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addOptions", zif_gearman_worker_add_options, arginfo_class_GearmanWorker_addOptions, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("removeOptions", zif_gearman_worker_remove_options, arginfo_class_GearmanWorker_removeOptions, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("timeout", zif_gearman_worker_timeout, arginfo_class_GearmanWorker_timeout, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setTimeout", zif_gearman_worker_set_timeout, arginfo_class_GearmanWorker_setTimeout, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setId", zif_gearman_worker_set_id, arginfo_class_GearmanWorker_setId, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("setSSL", zif_gearman_worker_set_ssl, arginfo_class_GearmanWorker_setSSL, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addServer", zif_gearman_worker_add_server, arginfo_class_GearmanWorker_addServer, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addServers", zif_gearman_worker_add_servers, arginfo_class_GearmanWorker_addServers, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("wait", zif_gearman_worker_wait, arginfo_class_GearmanWorker_wait, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("register", zif_gearman_worker_register, arginfo_class_GearmanWorker_register, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("unregister", zif_gearman_worker_unregister, arginfo_class_GearmanWorker_unregister, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("unregisterAll", zif_gearman_worker_unregister_all, arginfo_class_GearmanWorker_unregisterAll, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("grabJob", zif_gearman_worker_grab_job, arginfo_class_GearmanWorker_grabJob, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("addFunction", zif_gearman_worker_add_function, arginfo_class_GearmanWorker_addFunction, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("work", zif_gearman_worker_work, arginfo_class_GearmanWorker_work, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("ping", zif_gearman_worker_ping, arginfo_class_GearmanWorker_ping, ZEND_ACC_PUBLIC, NULL, NULL)
+	ZEND_RAW_FENTRY("enableExceptionHandler", zif_gearman_worker_enable_exception_handler, arginfo_class_GearmanWorker_enableExceptionHandler, ZEND_ACC_PUBLIC, NULL, NULL)
 	ZEND_FE_END
 };

@@ -290,7 +290,7 @@ PHP_FUNCTION(gearman_client_set_ssl) {
         gearman_client_obj *obj;
         zval *zobj;
 
-        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bsss",
+        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bs!s!s!",
                                         &zobj, gearman_client_ce,
                                         &ssl,
                                         &ca_file, &ca_file_len,
@@ -299,16 +299,6 @@ PHP_FUNCTION(gearman_client_set_ssl) {
                 RETURN_FALSE;
         }
         obj = Z_GEARMAN_CLIENT_P(zobj);
-
-        if (ca_file == NULL) {
-                cfg_get_string("gearman.ssl_ca_file", &ca_file);
-        }
-        if (certificate == NULL) {
-                cfg_get_string("gearman.ssl_certificate", &certificate);
-        }
-        if (key_file == NULL) {
-                cfg_get_string("gearman.ssl_key_file", &key_file);
-        }
 
         gearman_client_set_ssl(&(obj->client), ssl, ca_file, certificate, key_file);
         RETURN_TRUE;
