@@ -8,10 +8,10 @@ if (!method_exists('GearmanClient', 'setSSL')) die("skip libgearman without SSL 
 --FILE--
 <?php
 $client = new GearmanClient();
-var_dump($client->setSSL(false));
+var_dump($client->setSSL());
 
 $client2 = gearman_client_create();
-var_dump(gearman_client_set_ssl($client2, false));
+var_dump(gearman_client_set_ssl($client2));
 
 print "OK";
 ?>
