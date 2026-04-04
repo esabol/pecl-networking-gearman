@@ -1,3 +1,16 @@
+Version 2.2.0
+-------------
+- Add SSL support via setSSL() for GearmanClient and GearmanWorker (#9)
+- Fix jobs not retried when worker calls exit() mid-callback (#26)
+- Fix forked children causing premature job completion (#40)
+- Fix misleading "Unable to add worker function" exception message (#21)
+- Fix worker constructor error path cleanup (#17)
+- Add Homebrew Apple Silicon search path to config.m4 (#32)
+- Drop PHP 7.1, minimum is now PHP 7.2 (#42)
+- Support PHP 8.6 (#49)
+- Expose GEARMAN_*_STOP_WAIT_ON_SIGNAL constants (#51)
+- Add PIE support via composer.json
+
 Version 2.1.5
 -------------
 - Bump max PHP version so pecl will install for PHP 8.5
