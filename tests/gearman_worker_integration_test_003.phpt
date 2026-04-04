@@ -25,7 +25,9 @@ if ($wpid === 0) {
         $children = [];
         for ($i = 0; $i < 2; $i++) {
             $pid = pcntl_fork();
-            if ($pid === 0) {
+            if ($pid === -1) {
+                continue;
+            } elseif ($pid === 0) {
                 usleep(100000);
                 exit(0);
             }

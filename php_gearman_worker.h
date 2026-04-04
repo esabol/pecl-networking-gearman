@@ -16,6 +16,10 @@
 #include "php_ini.h"
 #include "ext/standard/info.h"
 
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+
 #include "zend_exceptions.h"
 #include "zend_interfaces.h"
 
