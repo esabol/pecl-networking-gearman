@@ -71,6 +71,31 @@ if test "$PHP_GEARMAN" != "no"; then
     -L$GEARMAN_LIB_DIR -R$GEARMAN_LIB_DIR
   ])
 
+  PHP_CHECK_LIBRARY(gearman, gearman_client_set_ssl,
+  [
+    AC_DEFINE(HAVE_GEARMAN_CLIENT_SET_SSL, 1, [Whether gearman_client_set_ssl is available])
+  ],[],[
+    -L$GEARMAN_LIB_DIR -R$GEARMAN_LIB_DIR
+  ])
+
+  PHP_CHECK_LIBRARY(gearman, gearman_worker_set_ssl,
+  [
+    AC_DEFINE(HAVE_GEARMAN_WORKER_SET_SSL, 1, [Whether gearman_worker_set_ssl is available])
+  ],[],[
+    -L$GEARMAN_LIB_DIR -R$GEARMAN_LIB_DIR
+  ])
+
+  AC_MSG_CHECKING([for GEARMAN_WORKER_SSL option])
+  old_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS="$CPPFLAGS -I$GEARMAN_INC_DIR"
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <libgearman-1.0/gearman.h>]],
+    [[int x = GEARMAN_WORKER_SSL;]])],
+    [AC_MSG_RESULT([yes])
+     AC_DEFINE(HAVE_GEARMAN_WORKER_SSL_OPTION, 1, [Whether GEARMAN_WORKER_SSL option is available])],
+    [AC_MSG_RESULT([no])]
+  )
+  CPPFLAGS="$old_CPPFLAGS"
+
   PHP_SUBST(GEARMAN_SHARED_LIBADD)
 
   PHP_ADD_INCLUDE($GEARMAN_INC_DIR)

@@ -9,6 +9,10 @@
  * the LICENSE file in this directory for full text.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "php_gearman_worker.h"
 
 gearman_worker_obj *gearman_worker_fetch_object(zend_object *obj) {
@@ -284,6 +288,60 @@ PHP_FUNCTION(gearman_worker_set_id) {
                 RETURN_FALSE;
         }
 
+        RETURN_TRUE;
+}
+/* }}} */
+
+/* {{{ proto bool gearman_worker_set_ssl(object worker [, bool ssl [, string ca_file [, string certificate [, string key_file ]]]])
+   Set SSL for a worker structure. */
+PHP_FUNCTION(gearman_worker_set_ssl) {
+        zend_bool ssl = 1;
+        char *ca_file = NULL;
+        size_t ca_file_len = 0;
+        char *certificate = NULL;
+        size_t certificate_len = 0;
+        char *key_file = NULL;
+        size_t key_file_len = 0;
+
+        gearman_worker_obj *obj;
+        zval *zobj;
+
+        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bs!s!s!",
+                                        &zobj, gearman_worker_ce,
+                                        &ssl,
+                                        &ca_file, &ca_file_len,
+                                        &certificate, &certificate_len,
+                                        &key_file, &key_file_len) == FAILURE) {
+                RETURN_FALSE;
+        }
+        obj = Z_GEARMAN_WORKER_P(zobj);
+
+#ifdef HAVE_GEARMAN_WORKER_SET_SSL
+        gearman_worker_set_ssl(&(obj->worker), ssl, ca_file, certificate, key_file);
+#elif defined(HAVE_GEARMAN_WORKER_SSL_OPTION)
+        /* gearman_worker_set_ssl() is declared in libgearman headers but not
+         * implemented (missing symbol through 1.1.22). Toggle the SSL option
+         * flag only. Per-worker cert paths are not supported in this fallback;
+         * set GEARMAND_CA_CERTIFICATE, GEARMAN_CLIENT_SSL_CERTIFICATE, and
+         * GEARMAN_CLIENT_SSL_KEY environment variables before starting PHP. */
+        if (ca_file || certificate || key_file) {
+                php_error_docref(NULL, E_WARNING,
+                        "Per-worker SSL certificate paths require libgearman with "
+                        "gearman_worker_set_ssl() support; use environment variables "
+                        "GEARMAND_CA_CERTIFICATE, GEARMAN_CLIENT_SSL_CERTIFICATE, "
+                        "and GEARMAN_CLIENT_SSL_KEY instead");
+                RETURN_FALSE;
+        }
+        if (ssl) {
+                gearman_worker_add_options(&(obj->worker), GEARMAN_WORKER_SSL);
+        } else {
+                gearman_worker_remove_options(&(obj->worker), GEARMAN_WORKER_SSL);
+        }
+#else
+        php_error_docref(NULL, E_WARNING,
+                "SSL is not supported by this version of libgearman");
+        RETURN_FALSE;
+#endif
         RETURN_TRUE;
 }
 /* }}} */
