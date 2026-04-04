@@ -324,17 +324,18 @@ PHP_FUNCTION(gearman_worker_set_ssl) {
          * flag only. Per-worker cert paths are not supported in this fallback;
          * set GEARMAND_CA_CERTIFICATE, GEARMAN_CLIENT_SSL_CERTIFICATE, and
          * GEARMAN_CLIENT_SSL_KEY environment variables before starting PHP. */
-        if (ssl) {
-                gearman_worker_add_options(&(obj->worker), GEARMAN_WORKER_SSL);
-        } else {
-                gearman_worker_remove_options(&(obj->worker), GEARMAN_WORKER_SSL);
-        }
         if (ca_file || certificate || key_file) {
                 php_error_docref(NULL, E_WARNING,
                         "Per-worker SSL certificate paths require libgearman with "
                         "gearman_worker_set_ssl() support; use environment variables "
                         "GEARMAND_CA_CERTIFICATE, GEARMAN_CLIENT_SSL_CERTIFICATE, "
                         "and GEARMAN_CLIENT_SSL_KEY instead");
+                RETURN_FALSE;
+        }
+        if (ssl) {
+                gearman_worker_add_options(&(obj->worker), GEARMAN_WORKER_SSL);
+        } else {
+                gearman_worker_remove_options(&(obj->worker), GEARMAN_WORKER_SSL);
         }
 #else
         php_error_docref(NULL, E_WARNING,
