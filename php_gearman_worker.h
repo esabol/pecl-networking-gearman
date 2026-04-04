@@ -16,9 +16,6 @@
 #include "php_ini.h"
 #include "ext/standard/info.h"
 
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
 
 #include "zend_exceptions.h"
 #include "zend_interfaces.h"
@@ -52,7 +49,7 @@ typedef struct {
         gearman_worker_obj_flags_t flags;
         gearman_worker_st worker;
         zval cb_list;
-        pid_t created_pid;
+        zend_long created_pid;
 
         zend_object std;
 } gearman_worker_obj;
