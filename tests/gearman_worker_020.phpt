@@ -3,6 +3,8 @@ GearmanWorker::setSSL(), gearman_worker_set_ssl()
 --SKIPIF--
 <?php
 if (!extension_loaded("gearman")) die("skip");
+$w = new GearmanWorker();
+if (@$w->setSSL(false) === false) die("skip libgearman without worker SSL support");
 ?>
 --FILE--
 <?php
