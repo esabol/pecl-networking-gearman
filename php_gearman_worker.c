@@ -26,7 +26,6 @@ static void gearman_worker_ctor(INTERNAL_FUNCTION_PARAMETERS) {
 	worker = Z_GEARMAN_WORKER_P(return_value);
 
 	if (gearman_worker_create(&(worker->worker)) == NULL) {
-		zval_ptr_dtor_nogc(return_value);
 		GEARMAN_EXCEPTION("Memory allocation failure", 0);
 	}
 
