@@ -2,13 +2,12 @@
 GEARMAN_WORKER_STOP_WAIT_ON_SIGNAL constant and addOptions()
 --SKIPIF--
 <?php
-if (!extension_loaded("gearman")) print "skip";
-if (!defined("GEARMAN_WORKER_STOP_WAIT_ON_SIGNAL")) print "skip libgearman too old";
+if (!extension_loaded("gearman")) die("skip");
+if (!defined("GEARMAN_WORKER_STOP_WAIT_ON_SIGNAL")) die("skip libgearman too old");
 ?>
 --FILE--
 <?php
 $worker = new GearmanWorker();
-$before = $worker->options();
 $worker->addOptions(GEARMAN_WORKER_STOP_WAIT_ON_SIGNAL);
 $after = $worker->options();
 var_dump(($after & GEARMAN_WORKER_STOP_WAIT_ON_SIGNAL) !== 0);

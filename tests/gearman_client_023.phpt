@@ -2,13 +2,12 @@
 GEARMAN_CLIENT_STOP_WAIT_ON_SIGNAL constant and addOptions()
 --SKIPIF--
 <?php
-if (!extension_loaded("gearman")) print "skip";
-if (!defined("GEARMAN_CLIENT_STOP_WAIT_ON_SIGNAL")) print "skip libgearman too old";
+if (!extension_loaded("gearman")) die("skip");
+if (!defined("GEARMAN_CLIENT_STOP_WAIT_ON_SIGNAL")) die("skip libgearman too old");
 ?>
 --FILE--
 <?php
 $client = new GearmanClient();
-$before = $client->options();
 $client->addOptions(GEARMAN_CLIENT_STOP_WAIT_ON_SIGNAL);
 $after = $client->options();
 var_dump(($after & GEARMAN_CLIENT_STOP_WAIT_ON_SIGNAL) !== 0);
