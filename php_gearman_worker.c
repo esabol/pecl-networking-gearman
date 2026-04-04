@@ -62,10 +62,11 @@ void gearman_worker_free_obj(zend_object *object) {
         gearman_worker_obj *intern = gearman_worker_fetch_object(object);
 
         if (intern->flags & GEARMAN_WORKER_OBJ_CREATED) {
-                /* Skip gearman_worker_free() in forked children to avoid
+                /* In forked children, skip gearman_worker_free() to avoid
                  * sending protocol messages over the parent's connection,
                  * which would cause gearmand to prematurely mark the
-                 * parent's in-progress job as complete. See #40. */
+                 * parent's in-progress job as complete. The inherited fds
+                 * will be closed when the child process exits. See #40. */
                 if ((zend_long)getpid() == intern->created_pid) {
                         gearman_worker_free(&(intern->worker));
                 }
