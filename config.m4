@@ -71,6 +71,20 @@ if test "$PHP_GEARMAN" != "no"; then
     -L$GEARMAN_LIB_DIR -R$GEARMAN_LIB_DIR
   ])
 
+  PHP_CHECK_LIBRARY(gearman, gearman_client_set_ssl,
+  [
+    AC_DEFINE(HAVE_GEARMAN_CLIENT_SET_SSL, 1, [Whether gearman_client_set_ssl is available])
+  ],[],[
+    -L$GEARMAN_LIB_DIR -R$GEARMAN_LIB_DIR
+  ])
+
+  PHP_CHECK_LIBRARY(gearman, gearman_worker_set_ssl,
+  [
+    AC_DEFINE(HAVE_GEARMAN_WORKER_SET_SSL, 1, [Whether gearman_worker_set_ssl is available])
+  ],[],[
+    -L$GEARMAN_LIB_DIR -R$GEARMAN_LIB_DIR
+  ])
+
   PHP_SUBST(GEARMAN_SHARED_LIBADD)
 
   PHP_ADD_INCLUDE($GEARMAN_INC_DIR)

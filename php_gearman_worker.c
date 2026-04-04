@@ -9,6 +9,10 @@
  * the LICENSE file in this directory for full text.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "php_gearman_worker.h"
 
 gearman_worker_obj *gearman_worker_fetch_object(zend_object *obj) {
@@ -284,6 +288,66 @@ PHP_FUNCTION(gearman_worker_set_id) {
                 RETURN_FALSE;
         }
 
+        RETURN_TRUE;
+}
+/* }}} */
+
+/* {{{ proto bool gearman_worker_set_ssl(object worker [, bool ssl [, string ca_file [, string certificate [, string key_file ]]]])
+   Set SSL for a worker structure. */
+PHP_FUNCTION(gearman_worker_set_ssl) {
+        zend_bool ssl = 1;
+        char *ca_file = NULL;
+        size_t ca_file_len = 0;
+        char *certificate = NULL;
+        size_t certificate_len = 0;
+        char *key_file = NULL;
+        size_t key_file_len = 0;
+
+        gearman_worker_obj *obj;
+        zval *zobj;
+
+        if (zend_parse_method_parameters(ZEND_NUM_ARGS(), getThis(), "O|bsss",
+                                        &zobj, gearman_worker_ce,
+                                        &ssl,
+                                        &ca_file, &ca_file_len,
+                                        &certificate, &certificate_len,
+                                        &key_file, &key_file_len) == FAILURE) {
+                RETURN_FALSE;
+        }
+        obj = Z_GEARMAN_WORKER_P(zobj);
+
+        if (ca_file == NULL) {
+                cfg_get_string("gearman.ssl_ca_file", &ca_file);
+        }
+        if (certificate == NULL) {
+                cfg_get_string("gearman.ssl_certificate", &certificate);
+        }
+        if (key_file == NULL) {
+                cfg_get_string("gearman.ssl_key_file", &key_file);
+        }
+
+#ifdef HAVE_GEARMAN_WORKER_SET_SSL
+        gearman_worker_set_ssl(&(obj->worker), ssl, ca_file, certificate, key_file);
+#else
+        /* gearman_worker_set_ssl() is declared in libgearman headers but not
+         * implemented (missing symbol). Use addOptions as fallback for the SSL
+         * flag, and set env vars for cert paths since that's how libgearman's
+         * internal SSL init reads them. */
+        if (ssl) {
+                gearman_worker_add_options(&(obj->worker), GEARMAN_WORKER_SSL);
+        } else {
+                gearman_worker_remove_options(&(obj->worker), GEARMAN_WORKER_SSL);
+        }
+        if (ca_file) {
+                setenv("GEARMAND_CA_CERTIFICATE", ca_file, 1);
+        }
+        if (certificate) {
+                setenv("GEARMAN_CLIENT_SSL_CERTIFICATE", certificate, 1);
+        }
+        if (key_file) {
+                setenv("GEARMAN_CLIENT_SSL_KEY", key_file, 1);
+        }
+#endif
         RETURN_TRUE;
 }
 /* }}} */
