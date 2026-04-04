@@ -318,7 +318,7 @@ PHP_FUNCTION(gearman_worker_set_ssl) {
 
 #ifdef HAVE_GEARMAN_WORKER_SET_SSL
         gearman_worker_set_ssl(&(obj->worker), ssl, ca_file, certificate, key_file);
-#else
+#elif defined(HAVE_GEARMAN_WORKER_SSL_OPTION)
         /* gearman_worker_set_ssl() is declared in libgearman headers but not
          * implemented (missing symbol through 1.1.22). Toggle the SSL option
          * flag only. Per-worker cert paths are not supported in this fallback;
@@ -336,6 +336,10 @@ PHP_FUNCTION(gearman_worker_set_ssl) {
                         "GEARMAND_CA_CERTIFICATE, GEARMAN_CLIENT_SSL_CERTIFICATE, "
                         "and GEARMAN_CLIENT_SSL_KEY instead");
         }
+#else
+        php_error_docref(NULL, E_WARNING,
+                "SSL is not supported by this version of libgearman");
+        RETURN_FALSE;
 #endif
         RETURN_TRUE;
 }

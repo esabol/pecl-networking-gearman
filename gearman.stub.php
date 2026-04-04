@@ -40,6 +40,9 @@ class GearmanClient {
     /** @alias gearman_client_set_timeout */
     public function setTimeout(int $timeout): bool {}
 
+    /* NOTE: setSSL is conditionally compiled (#ifdef HAVE_GEARMAN_CLIENT_SET_SSL).
+     * The arginfo in gearman_arginfo.h is manually maintained with #ifdef guards.
+     * Do not regenerate gearman_arginfo.h from this stub without re-adding guards. */
     /** @alias gearman_client_set_ssl */
     public function setSSL(bool $ssl = true, ?string $ca_file = null, ?string $certificate = null, ?string $key_file = null): bool {}
 
@@ -156,6 +159,7 @@ function gearman_client_add_options(GearmanClient $obj, int $option): bool {}
 function gearman_client_remove_options(GearmanClient $obj, int $option): bool {}
 function gearman_client_timeout(GearmanClient $obj): ?int {}
 function gearman_client_set_timeout(GearmanClient $obj, int $timeout): bool {}
+/* NOTE: conditionally compiled, see comment on GearmanClient::setSSL */
 function gearman_client_set_ssl(GearmanClient $obj, bool $ssl = true, ?string $ca_file = null, ?string $certificate = null, ?string $key_file = null): bool {}
 function gearman_client_add_server(GearmanClient $obj, ?string $host = null, int $port = 0, bool $setupExceptionHandler = true): bool {}
 function gearman_client_add_servers(GearmanClient $obj, ?string $servers = null, bool $setupExceptionHandler = true): bool {}

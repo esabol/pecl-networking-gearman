@@ -1,5 +1,5 @@
-/* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 61b9d7c4865da96ac967a58f08937db3999e6548 */
+/* This file is manually maintained for cross-PHP-version compatibility.
+ * Do not regenerate from gearman.stub.php without re-adding #ifdef guards. */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_version, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -46,6 +46,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_timeout, 0, 2
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+#ifdef HAVE_GEARMAN_CLIENT_SET_SSL
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_ssl, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanClient, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ssl, _IS_BOOL, 0, "true")
@@ -53,6 +54,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_set_ssl, 0, 1, _I
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, certificate, IS_STRING, 1, "null")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, key_file, IS_STRING, 1, "null")
 ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_gearman_client_add_server, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, obj, GearmanClient, 0)
@@ -816,8 +818,8 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gearman_worker_remove_options, arginfo_gearman_worker_remove_options)
 	ZEND_FE(gearman_worker_timeout, arginfo_gearman_worker_timeout)
 	ZEND_FE(gearman_worker_set_timeout, arginfo_gearman_worker_set_timeout)
-	ZEND_FE(gearman_worker_set_ssl, arginfo_gearman_worker_set_ssl)
 	ZEND_FE(gearman_worker_set_id, arginfo_gearman_worker_set_id)
+	ZEND_FE(gearman_worker_set_ssl, arginfo_gearman_worker_set_ssl)
 	ZEND_FE(gearman_worker_add_server, arginfo_gearman_worker_add_server)
 	ZEND_FE(gearman_worker_add_servers, arginfo_gearman_worker_add_servers)
 	ZEND_FE(gearman_worker_wait, arginfo_gearman_worker_wait)
