@@ -1,3 +1,8 @@
+Version 2.2.1
+-------------
+- Fix build failure on PHP 7.x with -Werror=incompatible-pointer-types (#61)
+- Convert README to Markdown
+
 Version 2.2.0
 -------------
 - Add SSL support via setSSL() for GearmanClient and GearmanWorker (#9)

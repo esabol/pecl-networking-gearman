@@ -1,5 +1,5 @@
 {
-    "name": "php/pecl-networking-gearman",
+    "name": "pecl/gearman",
     "type": "php-ext",
     "description": "PHP wrapper to libgearman",
     "license": "PHP-3.01",

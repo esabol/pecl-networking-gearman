@@ -16,10 +16,10 @@
   <email>hradtke@php.net</email>
   <active>yes</active>
  </lead>
- <date>2026-04-04</date>
- <time>20:00:00</time>
+ <date>2026-04-07</date>
+ <time>12:00:00</time>
  <version>
-  <release>2.2.0</release>
+  <release>2.2.1</release>
   <api>2.2.0</api>
  </version>
  <stability>
@@ -28,16 +28,8 @@
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
  <notes>
-- Add SSL support via setSSL() for GearmanClient and GearmanWorker (#9)
-- Fix jobs not retried when worker calls exit() mid-callback (#26)
-- Fix forked children causing premature job completion (#40)
-- Fix misleading "Unable to add worker function" exception message (#21)
-- Fix worker constructor error path cleanup (#17)
-- Add Homebrew Apple Silicon search path to config.m4 (#32)
-- Drop PHP 7.1, minimum is now PHP 7.2 (#42)
-- Support PHP 8.6 (#49)
-- Expose GEARMAN_*_STOP_WAIT_ON_SIGNAL constants (#51)
-- Add PIE support via composer.json
+- Fix build failure on PHP 7.x with -Werror=incompatible-pointer-types (#61)
+- Convert README to Markdown
  </notes>
  <contents>
   <dir name="/">
@@ -49,7 +41,7 @@
    <file name="examples/reverse_client.php" role="doc" />
    <file name="examples/reverse_client_task.php" role="doc" />
    <file name="examples/reverse_worker.php" role="doc" />
-   <file name="README" role="doc" />
+   <file name="README.md" role="doc" />
    <file name="CREDITS" role="doc" />
    <file name="LICENSE" role="doc" />
    <file name="ChangeLog" role="doc" />
@@ -168,6 +160,22 @@
  <providesextension>gearman</providesextension>
  <extsrcrelease />
  <changelog>
+
+  <release>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <version>
+    <release>2.2.1</release>
+    <api>2.2.0</api>
+   </version>
+   <date>2026-04-07</date>
+   <notes>
+- Fix build failure on PHP 7.x with -Werror=incompatible-pointer-types (#61)
+- Convert README to Markdown
+   </notes>
+  </release>
 
   <release>
    <stability>
