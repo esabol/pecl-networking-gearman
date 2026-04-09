@@ -613,6 +613,10 @@ static void *_php_worker_function_callback(gearman_job_st *job,
         if (EG(exception)) {
                 zend_string *exc_msg;
                 zval rv;
+#if PHP_VERSION_ID < 80000
+                zval exception_zv;
+#endif
+
                 ZVAL_UNDEF(&rv);
                 *ret_ptr = GEARMAN_WORK_EXCEPTION;
 
@@ -622,8 +626,14 @@ static void *_php_worker_function_callback(gearman_job_st *job,
                  * class as scope so the protected message property is
                  * accessible for all Throwable types (Error, TypeError,
                  * etc.), not just Exception. See issue #21. */
+#if PHP_VERSION_ID < 80000
+                ZVAL_OBJ(&exception_zv, EG(exception));
+                exc_msg = zval_get_string(zend_read_property(
+                        EG(exception)->ce, &exception_zv, "message", sizeof("message") - 1, 1, &rv));
+#else
                 exc_msg = zval_get_string(zend_read_property(
                         EG(exception)->ce, EG(exception), "message", sizeof("message") - 1, 1, &rv));
+#endif
 
                 jobj->ret = gearman_job_send_exception(jobj->job, ZSTR_VAL(exc_msg), ZSTR_LEN(exc_msg));
 
