@@ -40,11 +40,11 @@ jobs:
 
       - name: Configure macOS
         if: ${{ matrix.os == 'macos-latest' }}
-        run: ./configure --with-gearman=$(brew --prefix gearman)
+        run: ./configure --with-gearman=$(brew --prefix gearman) CFLAGS="-Werror=incompatible-pointer-types"
 
       - name: Configure Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: ./configure --with-gearman
+        run: ./configure --with-gearman CFLAGS="-Werror=incompatible-pointer-types"
 
       - name: Make extension
         run: make
