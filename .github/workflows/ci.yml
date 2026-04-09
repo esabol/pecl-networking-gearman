@@ -19,8 +19,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         version: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
         stable: [true]
-    env:
-      CFLAGS: -Werror=incompatible-pointer-types
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -42,11 +40,15 @@ jobs:
 
       - name: Configure macOS
         if: ${{ matrix.os == 'macos-latest' }}
-        run: ./configure --with-gearman=$(brew --prefix gearman)
+        run: |
+          CFLAGS="$(php-config --cflags) -Werror=incompatible-pointer-types" \
+            ./configure --with-gearman=$(brew --prefix gearman)
 
       - name: Configure Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: ./configure --with-gearman
+        run: |
+          CFLAGS="$(php-config --cflags) -Werror=incompatible-pointer-types" \
+            ./configure --with-gearman
 
       - name: Make extension
         run: make
